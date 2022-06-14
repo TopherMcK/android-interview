@@ -12,6 +12,7 @@ class CurrentWeatherFragmentViewBinder(
 
     val availableWeatherViewData = viewModel.availableCurrentWeatherLiveData
     val isEmpty = viewModel.isEmptyVisible
+    val isQueryError = viewModel.isQueryErrorMsgVisible
 
     var input: String = ""
 
