@@ -15,9 +15,10 @@ class CurrentWeatherFragmentViewBinder(
     val isQueryError = viewModel.isQueryErrorMsgVisible
 
     var input: String = ""
+    private var displayedInput = ""
 
     fun refreshClicked() {
-        Toast.makeText(activity, "Refresh Clicked TODO", Toast.LENGTH_LONG).show()
+        if(displayedInput.length >= 3) viewModel.submitCurrentWeatherSearch(displayedInput)
     }
 
     fun seeForecastClicked() {
@@ -34,6 +35,7 @@ class CurrentWeatherFragmentViewBinder(
         } else if (input.length < 3) {
             Toast.makeText(activity, "Please Enter More than 3 Characters", Toast.LENGTH_LONG).show()
         } else {
+            displayedInput = input
             viewModel.submitCurrentWeatherSearch(input)
         }
     }
