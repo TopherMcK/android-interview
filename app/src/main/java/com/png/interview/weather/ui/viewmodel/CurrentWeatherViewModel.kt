@@ -36,4 +36,6 @@ class CurrentWeatherViewModel @Inject constructor(
         _currentWeatherViewRepresentation
             .map { it is CurrentWeatherViewRepresentation.Error }
             .asLiveData()
+
+    var displayedInput = ""
 }

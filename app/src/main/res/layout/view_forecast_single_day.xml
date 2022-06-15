@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="40dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
+
+                <TextView
+                    style="@style/TextViewLabelStyle"
+                    android:id="@+id/tv_date_label"
+                    android:text="@string/date"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    style="@style/TextViewValueStyle"
+                    android:id="@+id/tv_date_value"
+                    android:text="Date"
+                    app:layout_constraintStart_toEndOf="@id/tv_date_label"
+                    app:layout_constraintTop_toTopOf="@id/tv_date_label"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_date_label"
+                    tools:text="01-01-2022" />
+
+                <TextView
+                    style="@style/TextViewLabelStyle"
+                    android:id="@+id/tv_min_temp_label"
+                    android:text="@string/min_temp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_date_label"/>
+
+                <TextView
+                    style="@style/TextViewValueStyle"
+                    android:id="@+id/tv_min_temp_value"
+                    android:text="Min Temp"
+                    app:layout_constraintStart_toEndOf="@id/tv_min_temp_label"
+                    app:layout_constraintTop_toTopOf="@id/tv_min_temp_label"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_min_temp_label"
+                    tools:text="95F" />
+
+                <TextView
+                    style="@style/TextViewLabelStyle"
+                    android:id="@+id/tv_max_temp_label"
+                    android:text="@string/max_temp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_min_temp_label"/>
+
+                <TextView
+                    style="@style/TextViewValueStyle"
+                    android:id="@+id/tv_max_temp_value"
+                    android:text="Max Temp"
+                    app:layout_constraintStart_toEndOf="@id/tv_max_temp_label"
+                    app:layout_constraintTop_toTopOf="@id/tv_max_temp_label"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_max_temp_label"
+                    tools:text="95F" />
+
+                <TextView
+                    style="@style/TextViewLabelStyle"
+                    android:id="@+id/tv_wind_speed_label"
+                    android:text="@string/wind_speed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_max_temp_label"/>
+
+                <TextView
+                    style="@style/TextViewValueStyle"
+                    android:id="@+id/tv_wind_speed_value"
+                    android:text="Wind Speed"
+                    app:layout_constraintStart_toEndOf="@id/tv_wind_speed_label"
+                    app:layout_constraintTop_toTopOf="@id/tv_wind_speed_label"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_wind_speed_label"
+                    tools:text="6MPH" />
+
+                <TextView
+                    style="@style/TextViewLabelStyle"
+                    android:id="@+id/tv_condition_label"
+                    android:text="@string/condition"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_wind_speed_label"/>
+
+                <TextView
+                    style="@style/TextViewValueStyle"
+                    android:id="@+id/tv_condition_value"
+                    android:text="Condition"
+                    app:layout_constraintStart_toEndOf="@id/tv_condition_label"
+                    app:layout_constraintTop_toTopOf="@id/tv_condition_label"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_condition_label"
+                    tools:text="Sunny" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
+</layout>

@@ -26,4 +26,8 @@
 	<string name="units">Units</string>
 	<string name="name">Name</string>
 	<string name="query_error_msg">Error occurred retrieving weather information</string>
+	<string name="forecast">Forecast</string>
+	<string name="date">Date:</string>
+	<string name="min_temp">Min Temperature:</string>
+	<string name="max_temp">Max Temperature:</string>
 </resources>
