@@ -13,6 +13,7 @@
 	<color name="orange">#ffa500</color>
 	<color name="green">#209b20</color>
 	<color name="gray_dark">#CB3C3C3C</color>
+	<color name="gray_border">#4f4949</color>
 
 	<color name="colorPrimary">#012650</color>
 	<color name="colorPrimaryDark">@color/blue_02</color>

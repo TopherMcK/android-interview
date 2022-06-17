@@ -36,5 +36,5 @@ class ForecastRecyclerViewAdapter(
         }
     }
 
-    inner class ForecastViewHolder(val forecastViewBinding: ViewForecastSingleDayBinding) : RecyclerView.ViewHolder(forecastViewBinding.root) {}
+    inner class ForecastViewHolder(val forecastViewBinding: ViewForecastSingleDayBinding) : RecyclerView.ViewHolder(forecastViewBinding.root)
 }

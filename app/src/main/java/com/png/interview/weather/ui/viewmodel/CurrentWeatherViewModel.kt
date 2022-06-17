@@ -3,7 +3,9 @@ package com.png.interview.weather.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.png.interview.weather.domain.CreateAutocompleteRepFromQueryUseCase
 import com.png.interview.weather.domain.CreateCurrentWeatherRepFromQueryUseCase
+import com.png.interview.weather.ui.model.AutocompleteViewRepresentation
 import com.png.interview.weather.ui.model.CurrentWeatherViewRepresentation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -11,15 +13,27 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CurrentWeatherViewModel @Inject constructor(
-    private val createCurrentWeatherRepFromQueryUseCase: CreateCurrentWeatherRepFromQueryUseCase
+    private val createCurrentWeatherRepFromQueryUseCase: CreateCurrentWeatherRepFromQueryUseCase,
+    private val createAutocompleteRepFromQueryUseCase: CreateAutocompleteRepFromQueryUseCase
 ) : ViewModel() {
 
     private val _currentWeatherViewRepresentation = MutableStateFlow<CurrentWeatherViewRepresentation>(CurrentWeatherViewRepresentation.Empty)
+    private val _autocompleteViewRepresentation = MutableStateFlow<AutocompleteViewRepresentation>(AutocompleteViewRepresentation.Empty)
 
     fun submitCurrentWeatherSearch(query: String) {
         viewModelScope.launch {
             _currentWeatherViewRepresentation.value = createCurrentWeatherRepFromQueryUseCase(query)
         }
+    }
+
+    fun submitCurrentWeatherSearch(itemPosition: Int) {
+        val currentRep = _autocompleteViewRepresentation.value
+        if(currentRep is AutocompleteViewRepresentation.AutocompleteViewRep)
+            currentRep.data.elementAtOrNull(itemPosition)?.let {
+                displayedInput = it.suggestion
+                submitCurrentWeatherSearch(it.suggestion)
+                setAutocompleteEmpty()
+            }
     }
 
     val availableCurrentWeatherLiveData =
@@ -36,6 +50,30 @@ class CurrentWeatherViewModel @Inject constructor(
         _currentWeatherViewRepresentation
             .map { it is CurrentWeatherViewRepresentation.Error }
             .asLiveData()
+
+    val autocompleteLiveData =
+        _autocompleteViewRepresentation.map {
+            (it as? AutocompleteViewRepresentation.AutocompleteViewRep)?.data
+        }.asLiveData()
+
+    fun submitAutocompleteQuery(query: String) =
+        viewModelScope.launch {
+            _autocompleteViewRepresentation.value = createAutocompleteRepFromQueryUseCase(query)
+        }
+
+    fun setAutocompleteEmpty() {
+        if(_autocompleteViewRepresentation.value.isVisibleRep())
+            _autocompleteViewRepresentation.value = AutocompleteViewRepresentation.Empty
+    }
+
+    val hasAutocompleteSuggestionsVisible =
+        _autocompleteViewRepresentation.map {
+            it.isVisibleRep()
+        }.asLiveData()
+
+    private fun AutocompleteViewRepresentation.isVisibleRep() =
+        this is AutocompleteViewRepresentation.AutocompleteViewRep &&
+                this.data.isNotEmpty()
 
     var displayedInput = ""
 }

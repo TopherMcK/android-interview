@@ -17,6 +17,7 @@
 			android:layout_height="wrap_content"
 			android:hint="@string/enter_zip_or_city"
 			android:text="@={viewBinder.input}"
+			android:afterTextChanged="@{viewBinder.retrieveSuggestionsIfNeeded}"
 			app:layout_constraintEnd_toStartOf="@id/btn_go"
 			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintStart_toStartOf="parent"/>
@@ -31,13 +32,22 @@
 			app:layout_constraintEnd_toEndOf="parent" />
 
 		<include
+			layout="@layout/view_autocomplete_suggestions"
+			android:id="@+id/view_autocomplete_suggestions"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:layout_marginTop="5dp"
+			app:viewBinder="@={viewBinder}"
+			app:layout_constraintTop_toBottomOf="@id/et_input"/>
+
+		<include
 			layout="@layout/view_current_weather_available"
 			android:id="@+id/view_current_weather_available"
 			android:layout_height="200dp"
 			android:layout_width="match_parent"
 			android:layout_marginTop="8dp"
 			app:viewData="@{viewBinder.availableWeatherViewData}"
-			app:layout_constraintTop_toBottomOf="@id/et_input"/>
+			app:layout_constraintTop_toBottomOf="@id/view_autocomplete_suggestions"/>
 
 		<include
 			layout="@layout/view_current_weather_empty"
@@ -46,7 +56,7 @@
 			android:layout_width="match_parent"
 			android:layout_marginTop="8dp"
 			app:emptyVisible="@{viewBinder.isEmpty}"
-			app:layout_constraintTop_toBottomOf="@id/et_input" />
+			app:layout_constraintTop_toBottomOf="@id/view_autocomplete_suggestions" />
 
 		<include
 			layout="@layout/view_current_weather_error_msg"
@@ -55,7 +65,7 @@
 			android:layout_width="match_parent"
 			android:layout_marginTop="8dp"
 			app:queryErrorMsgVisible="@{viewBinder.isQueryError}"
-			app:layout_constraintTop_toBottomOf="@id/et_input"/>
+			app:layout_constraintTop_toBottomOf="@id/view_autocomplete_suggestions"/>
 
 		<androidx.constraintlayout.widget.Barrier
 			android:id="@+id/content_barrier"

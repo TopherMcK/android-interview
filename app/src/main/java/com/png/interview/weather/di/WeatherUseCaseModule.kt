@@ -12,10 +12,4 @@ abstract class WeatherUseCaseModule {
 
     @Binds
     abstract fun bindsGetCurrentWeatherRepUseCase(usecase: DefaultCreateCurrentWeatherRepFromQueryUseCase): CreateCurrentWeatherRepFromQueryUseCase
-
-    @Binds
-    abstract fun bindGetForecastDataUseCase(usecase: DefaultGetForecastDataUseCase): GetForecastDataUseCase
-
-    @Binds
-    abstract fun bindGetThreeDayForecastRepFromQueryUseCase(usecase: DefaultCreateThreeDayForecastRepFromQueryUseCase): CreateThreeDayForecastRepFromQueryUseCase
 }

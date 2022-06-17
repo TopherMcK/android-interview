@@ -6,6 +6,8 @@ import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import androidx.preference.PreferenceManager
 import com.png.interview.dagger.scope.ApplicationScope
+import com.png.interview.weather.di.AutocompleteUseCaseModule
+import com.png.interview.weather.di.ForecastUseCaseModule
 import com.png.interview.weather.di.WeatherApiModule
 import com.png.interview.weather.di.WeatherUseCaseModule
 
@@ -17,7 +19,9 @@ import dagger.Provides
         ViewModelModule::class,
         CommonApiModule::class,
         WeatherApiModule::class,
-        WeatherUseCaseModule::class
+        WeatherUseCaseModule::class,
+        ForecastUseCaseModule::class,
+        AutocompleteUseCaseModule::class
     ]
 )
 class AppModule(val application: Application) {
