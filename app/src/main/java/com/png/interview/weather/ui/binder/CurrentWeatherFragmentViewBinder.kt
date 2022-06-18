@@ -71,4 +71,8 @@ class CurrentWeatherFragmentViewBinder(
 
         if(input.length > 2) viewModel.submitAutocompleteQuery(input)
     }
+
+    fun updateForMeasurementSystemChangeIFNeeded() {
+        viewModel.updateForMeasurementSystemChangeIFNeeded()
+    }
 }

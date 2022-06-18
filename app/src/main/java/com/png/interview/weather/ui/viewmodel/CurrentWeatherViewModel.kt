@@ -5,6 +5,8 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.png.interview.weather.domain.CreateAutocompleteRepFromQueryUseCase
 import com.png.interview.weather.domain.CreateCurrentWeatherRepFromQueryUseCase
+import com.png.interview.weather.domain.CreateGetMeasurementSystemPrefFromSettingUseCase
+import com.png.interview.weather.preferences.MeasurementSystem
 import com.png.interview.weather.ui.model.AutocompleteViewRepresentation
 import com.png.interview.weather.ui.model.CurrentWeatherViewRepresentation
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 class CurrentWeatherViewModel @Inject constructor(
     private val createCurrentWeatherRepFromQueryUseCase: CreateCurrentWeatherRepFromQueryUseCase,
-    private val createAutocompleteRepFromQueryUseCase: CreateAutocompleteRepFromQueryUseCase
+    private val createAutocompleteRepFromQueryUseCase: CreateAutocompleteRepFromQueryUseCase,
+    private val getMeasurementSystemPrefFromSettingUseCase: CreateGetMeasurementSystemPrefFromSettingUseCase
 ) : ViewModel() {
 
     private val _currentWeatherViewRepresentation = MutableStateFlow<CurrentWeatherViewRepresentation>(CurrentWeatherViewRepresentation.Empty)
@@ -38,7 +41,12 @@ class CurrentWeatherViewModel @Inject constructor(
 
     val availableCurrentWeatherLiveData =
         _currentWeatherViewRepresentation
-            .map { (it as? CurrentWeatherViewRepresentation.AvailableWeatherViewRep)?.data }
+            .map {
+                (it as? CurrentWeatherViewRepresentation.AvailableWeatherViewRep)?.let { rep ->
+                    displayedMeasurementSystem = rep.measurementSystem
+                    rep.data
+                }
+            }
             .asLiveData()
 
     val isEmptyVisible =
@@ -76,4 +84,16 @@ class CurrentWeatherViewModel @Inject constructor(
                 this.data.isNotEmpty()
 
     var displayedInput = ""
+
+    var displayedMeasurementSystem: MeasurementSystem? = null
+
+    fun updateForMeasurementSystemChangeIFNeeded() {
+        if(displayedMeasurementSystem != null) {
+            viewModelScope.launch {
+                val savedMeasurementSystemPref = getMeasurementSystemPrefFromSettingUseCase()
+                if(displayedMeasurementSystem != savedMeasurementSystemPref)
+                    submitCurrentWeatherSearch(displayedInput)
+            }
+        }
+    }
 }

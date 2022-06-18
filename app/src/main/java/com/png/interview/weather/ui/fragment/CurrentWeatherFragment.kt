@@ -13,6 +13,8 @@ import com.png.interview.weather.ui.viewmodel.CurrentWeatherViewModel
 
 class CurrentWeatherFragment : InjectedFragment() {
 
+    private lateinit var currentWeatherFragmentViewBinder: CurrentWeatherFragmentViewBinder
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: FragmentCurrentWeatherBinding = FragmentCurrentWeatherBinding.inflate(inflater, container,false)
         val rootView = binding.root
@@ -27,7 +29,7 @@ class CurrentWeatherFragment : InjectedFragment() {
 
         return binding.apply {
             val viewModel: CurrentWeatherViewModel = getViewModel()
-            viewBinder = CurrentWeatherFragmentViewBinder(
+            currentWeatherFragmentViewBinder = CurrentWeatherFragmentViewBinder(
                 viewModel,
                 requireActivity(),
                 settingsAction = {
@@ -39,7 +41,13 @@ class CurrentWeatherFragment : InjectedFragment() {
                 viewLifecycleOwner,
                 autocompleteAdapter
             )
+            viewBinder = currentWeatherFragmentViewBinder
             this.lifecycleOwner = viewLifecycleOwner
         }.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        currentWeatherFragmentViewBinder.updateForMeasurementSystemChangeIFNeeded()
     }
 }
